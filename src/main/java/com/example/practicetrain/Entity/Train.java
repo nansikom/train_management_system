@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
+
+import java.util.List;
+
+
 // important pacakge that establishes the connection to make these Java classes database tables
 @Table
 @Entity
@@ -20,7 +24,16 @@ public class Train {
     )
     private Long id;
     private String name;
-
+    //One train has multiple routes
+    @OneToMany(
+            mappedBy = "train",
+            cascade = CascadeType.ALL
+    )
+    // Creating the list of routes
+    private List<Route> routes;
+    public void setRoutes(List<Route> routes){
+        this.routes = routes;
+}
     public Long getId() {
         return id;
     }
@@ -55,16 +68,11 @@ public class Train {
 
     private Integer capacity;
     private String status;
-
-
     public Train(String name, Integer capacity, String status) {
         this.name = name;
         this.capacity = capacity;
         this.status = status;
     }
-
-
-
     public Train(Long id, String name, Integer capacity, String status) {
         this.id = id;
         this.name = name;
@@ -72,5 +80,8 @@ public class Train {
         this.status = status;
     }
     public Train() {
+    }
+    public List<Route> getRoutes() {
+        return routes;
     }
 }
