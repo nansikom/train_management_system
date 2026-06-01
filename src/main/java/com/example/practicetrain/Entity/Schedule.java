@@ -1,9 +1,34 @@
 package com.example.practicetrain.Entity;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+@Entity
+
 public class Schedule {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long schedule_id;
-    private Long train_id;
-    private Long station_id;
+    @ManyToOne
+    private Train train;
+    @ManyToOne
+    private Route route;
+
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
     private LocalDateTime departure_time;
 
     public Schedule() {
@@ -17,23 +42,6 @@ public class Schedule {
     public void setSchedule_id(Long schedule_id) {
         this.schedule_id = schedule_id;
     }
-
-    public Long getTrain_id() {
-        return train_id;
-    }
-
-    public void setTrain_id(Long train_id) {
-        this.train_id = train_id;
-    }
-
-    public Long getStation_id() {
-        return station_id;
-    }
-
-    public void setStation_id(Long station_id) {
-        this.station_id = station_id;
-    }
-
     public LocalDateTime getDeparture_time() {
         return departure_time;
     }
@@ -52,20 +60,14 @@ public class Schedule {
 
 
 
-    public Schedule(Long train_id, Long station_id, LocalDateTime departure_time, LocalDateTime arrival_time) {
-        this.train_id = train_id;
-        this.station_id = station_id;
+    public Schedule( LocalDateTime departure_time, LocalDateTime arrival_time) {
         this.departure_time = departure_time;
         this.arrival_time = arrival_time;
     }
 
-    public Schedule(Long schedule_id, Long train_id, Long station_id, LocalDateTime departure_time, LocalDateTime arrival_time) {
+    public Schedule(Long schedule_id, LocalDateTime departure_time, LocalDateTime arrival_time) {
         this.schedule_id = schedule_id;
-        this.train_id = train_id;
-        this.station_id = station_id;
         this.departure_time = departure_time;
         this.arrival_time = arrival_time;
     }
-
-
 }

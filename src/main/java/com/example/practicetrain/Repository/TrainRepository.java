@@ -13,7 +13,5 @@ public interface TrainRepository  extends JpaRepository<Train, Long > {
     @Query("SELECT s FROM Train s WHERE s.status = ?1")
     List<Train> findByStatus(String status);
     @Query("SELECT s FROM Train s WHERE s.capacity > ?1")
-    List<Train>findcapacitygreaterthan(Integer capacity);
-
-
+    List<Train> findByCapacityGreaterThan(Integer capacity);
 }

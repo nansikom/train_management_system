@@ -1,5 +1,6 @@
 package com.example.practicetrain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -29,11 +30,15 @@ public class Train {
             mappedBy = "train",
             cascade = CascadeType.ALL
     )
+    @JsonIgnore
     // Creating the list of routes
-    private List<Route> routes;
-    public void setRoutes(List<Route> routes){
-        this.routes = routes;
+    private List<Schedule> schedules;
+    public void setSchedules(List<Schedule> schedules){
+        this.schedules = schedules;
 }
+    public List<Schedule> getSchedules(){
+        return schedules;
+    }
     public Long getId() {
         return id;
     }
@@ -80,8 +85,5 @@ public class Train {
         this.status = status;
     }
     public Train() {
-    }
-    public List<Route> getRoutes() {
-        return routes;
     }
 }

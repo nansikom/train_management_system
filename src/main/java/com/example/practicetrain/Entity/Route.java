@@ -1,6 +1,9 @@
 package com.example.practicetrain.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table
@@ -16,29 +19,36 @@ public class Route {
             generator = "route_sequence"
     )
     private Long id;
-    private String origin_station;
-    private  String destination_station;
-    private Integer  distance;
+    @Column(name = "origin_station")
+    private String originStation;
+    @Column(name = "destination_station")
+    private String destinationStation;
+    private Integer distance;
     //Every route belongs to one train
     // runs a query thru this and returns the result
-    @ManyToOne
-    @JoinColumn(name="train_id")
-    //map object relationship linking train_id as foreign key
-    // saves them at the creation in the repo coz route has a field named train and train has id
-    private Train train;
-    public void setTrain(Train train){
-        this.train = train;
+    @OneToMany(
+            mappedBy = "route",
+            cascade = CascadeType.ALL
+    )
+    @JsonIgnore
+    // Creating the list of routes
+    private List<Schedule> schedules;
+    public void setSchedules(List<Schedule> schedules){
+        this.schedules = schedules;
+    }
+    public List<Schedule> getSchedules(){
+        return schedules;
     }
 
-    public Route(Long id, String origin_station, String destination_station, Integer distance) {
+    public Route(Long id, String originStation, String destinationStation, Integer distance) {
         this.id = id;
-        this.origin_station = origin_station;
-        this.destination_station = destination_station;
+        this.originStation = originStation;
+        this.destinationStation = destinationStation;
         this.distance = distance;
     }
-    public Route(String origin_station, String destination_station, Integer distance) {
-        this.origin_station = origin_station;
-        this.destination_station = destination_station;
+    public Route(String originStation, String destinationStation, Integer distance) {
+        this.originStation = originStation;
+        this.destinationStation = destinationStation;
         this.distance = distance;
     }
 
@@ -53,20 +63,20 @@ public class Route {
         this.id = id;
     }
 
-    public String getOrigin_station() {
-        return origin_station;
+    public String getOriginStation() {
+        return originStation;
     }
 
-    public void setOrigin_station(String origin_station) {
-        this.origin_station = origin_station;
+    public void setOriginStation(String originStation) {
+        this.originStation = originStation;
     }
 
-    public String getDestination_station() {
-        return destination_station;
+    public String getDestinationStation() {
+        return destinationStation;
     }
 
-    public void setDestination_station(String destination_station) {
-        this.destination_station = destination_station;
+    public void setDestinationStation(String destinationStation) {
+        this.destinationStation = destinationStation;
     }
 
     public Integer getDistance() {

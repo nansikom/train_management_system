@@ -1,4 +1,7 @@
 package com.example.practicetrain.Repository;
 
-public interface StationRepository {
+import com.example.practicetrain.Entity.Station;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StationRepository extends JpaRepository<Station, Long> {
 }
